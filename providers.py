@@ -37,11 +37,12 @@ class GoogleProvider:
     MAX_SEGMENTS = 128          # API limit per request
     MAX_CHARS = 25_000          # stay under the recommended 30k per request
 
-    def __init__(self, api_key: str | None = None, timeout: float = 60.0):
+    def __init__(self, api_key: str | None = None, timeout: float = 60.0,
+                 client: httpx.Client | None = None):
         self.api_key = api_key or os.environ.get("GOOGLE_TRANSLATE_API_KEY", "")
         if not self.api_key:
             raise TranslationError("GOOGLE_TRANSLATE_API_KEY is not set")
-        self.client = httpx.Client(timeout=timeout)
+        self.client = client or httpx.Client(timeout=timeout)
 
     def translate_batch(self, texts: list[str], source: str, target: str) -> list[str]:
         out: list[str] = []

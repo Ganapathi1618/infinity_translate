@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Infinity Translate</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">∞ Infinity Translate</div>
+    <div class="account">
+      <span id="balance" class="balance hidden"></span>
+      <span id="user-email" class="muted hidden"></span>
+      <button id="buy-btn" class="btn small hidden">Buy credits</button>
+      <button id="login-btn" class="btn small">Sign in</button>
+      <button id="logout-btn" class="btn small ghost hidden">Sign out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="notice" class="notice hidden"></div>
+
+    <section class="card">
+      <h1>Translate a PDF to Telugu or Hindi</h1>
+      <p class="muted">The layout is kept: text is replaced in place, images, tables and charts stay where they are.
+        Text-based PDFs only (no scans), up to <span id="lim-mb">25</span> MB and <span id="lim-pages">50</span> pages.</p>
+
+      <label id="drop" class="drop" for="file-input">
+        <input id="file-input" type="file" accept="application/pdf,.pdf" hidden>
+        <div id="drop-text"><strong>Drop a PDF here</strong> or click to choose a file</div>
+      </label>
+
+      <div id="file-info" class="file-info hidden">
+        <div><strong id="file-name"></strong> · <span id="file-pages"></span> pages</div>
+        <div class="muted">Full document: <strong id="estimate"></strong> credits
+          (<span id="cpp"></span> credits per page)</div>
+      </div>
+
+      <div class="controls">
+        <label>Target language
+          <select id="target"></select>
+        </label>
+        <fieldset class="mode">
+          <label><input type="radio" name="mode" value="sample" checked>
+            Free sample (first <span id="sample-pages">2</span> pages)</label>
+          <label><input type="radio" name="mode" value="full"> Full document</label>
+        </fieldset>
+        <button id="translate-btn" class="btn primary" disabled>Translate</button>
+      </div>
+      <div id="error" class="error hidden"></div>
+    </section>
+
+    <section id="progress-card" class="card hidden">
+      <h2>Progress</h2>
+      <ol class="steps" id="steps">
+        <li data-stage="queued">Queued</li>
+        <li data-stage="extracting">Extracting text</li>
+        <li data-stage="translating">Translating</li>
+        <li data-stage="rebuilding">Rebuilding PDF</li>
+        <li data-stage="done">Done</li>
+      </ol>
+      <div id="job-error" class="error hidden"></div>
+      <div id="result" class="hidden">
+        <div id="overflow" class="warn hidden"></div>
+        <div class="result-actions">
+          <a id="download-btn" class="btn primary" href="#">Download PDF</a>
+          <span class="muted" id="expiry-note">Files are deleted after 7 days.</span>
+        </div>
+        <div id="preview" class="preview"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="login-dialog">
+    <form id="login-form" method="dialog">
+      <h3>Sign in</h3>
+      <p class="muted">Enter your email. We'll send you a sign-in link, no password needed.</p>
+      <input id="login-email" type="email" required placeholder="you@example.com" autocomplete="email">
+      <div id="login-msg" class="muted"></div>
+      <div class="dialog-actions">
+        <button type="button" id="login-cancel" class="btn ghost">Cancel</button>
+        <button type="submit" class="btn primary">Send link</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
